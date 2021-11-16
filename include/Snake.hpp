@@ -15,11 +15,16 @@ class Snake
 {
 public:
     Snake();
+
+    void Init();
     Vector2 GetHead();
     void Draw();
     void Update();
     void ChangeDirection(Directions dir);
     void Grow();
+    
+    bool CollidesWithTail();
+    bool ObjectCollidesWithSnake(Vector2 obj);
 
 private:
     int tile_size;

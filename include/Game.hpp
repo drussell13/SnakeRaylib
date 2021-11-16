@@ -18,6 +18,7 @@ public:
     void Run();
 
 private:
+    void Init();
     void Draw();
     void DrawGrid();
     void Update();

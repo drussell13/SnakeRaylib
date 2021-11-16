@@ -4,6 +4,12 @@
 
 Snake::Snake()
 {
+    Init();
+}
+
+
+void Snake::Init()
+{
     tile_size = TILE_SIZE;
 
     int initial_x_tile = (int)(SCREEN_WIDTH/2) / tile_size;
@@ -12,6 +18,7 @@ Snake::Snake()
     float initial_x_pos = initial_x_tile * tile_size;
     float initial_y_pos = initial_y_tile * tile_size;
 
+    body.clear();
     int initial_length = 5;
     for (int i=0; i<initial_length; i++)
     {
@@ -102,4 +109,44 @@ void Snake::Draw()
         Vector2 snake_tile = body.at(i);
         DrawRectangle(snake_tile.x, snake_tile.y, tile_size, tile_size, BLACK);
     }
+}
+
+
+bool Snake::CollidesWithTail()
+{
+    Vector2& head = body.at(0);
+    
+    for (int i=1; i<body.size(); i++)
+    {
+        Vector2& piece = body.at(i);
+
+        bool same_x = piece.x == head.x;
+        bool same_y = piece.y == head.y;
+
+        if (same_x && same_y)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+bool ObjectCollidesWithSnake(Vector2 obj)
+{
+    for (int i=0; i<body.size(); i++)
+    {
+        Vector2& piece = body.at(i);
+
+        bool same_x = piece.x == obj.x;
+        bool same_y = piece.y == obj.y;
+
+        if (same_x && same_y)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }

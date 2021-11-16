@@ -3,14 +3,21 @@
 
 Game::Game()
 {
+    Init();
+}
+
+void Game::Init()
+{
     screen_width = SCREEN_WIDTH;
     screen_height = SCREEN_HEIGHT;
 
     tile_size = TILE_SIZE;
 
     frames_counter = 0;
-    gamestate = GameStates::GAMEPLAY;
+    gamestate = GameStates::TITLE;
 
+    snake.Init();
+    fruit.Init();
 }
 
 void Game::Run()
@@ -26,6 +33,7 @@ void Game::Run()
 
     CloseWindow();
 }
+
 
 void Game::Draw()
 {
@@ -57,6 +65,7 @@ void Game::Draw()
     EndDrawing();
 }
 
+
 void Game::DrawGrid()
 {
     for (int i=0; i < screen_width/tile_size; i++)
@@ -71,6 +80,7 @@ void Game::DrawGrid()
         DrawLineV((Vector2){0, y_pos}, (Vector2){(float) screen_width, y_pos}, LIGHTGRAY);
     }
 }
+
 
 void Game::Update()
 {
@@ -106,16 +116,19 @@ void Game::Update()
 
             // Collisions should be down here actually.
             if (ObjectOutOfBounds(snake.GetHead())) gamestate = GameStates::ENDING;
+            if (snake.CollidesWithTail()) gamestate = GameStates::ENDING;
             break;
         case GameStates::ENDING:
             if (IsKeyPressed(KEY_ENTER))
             {
+                Init();  // Restart game
                 gamestate = GameStates::TITLE;
             }
             break;
         default: break;
     }
 }
+
 
 bool Game::ObjectOutOfBounds(Vector2 obj)
 {
