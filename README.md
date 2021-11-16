@@ -17,7 +17,7 @@ From the project folder run the following commands:
 3. `cmake --build .`
 
 ### Step 2 - Playing the game:
-* To start the game, execute the compiled program like `./snake_raylib`
+* To start the game, execute the compiled program like `./SnakeRaylib`
 * When the program is open, press any key to begin the game, and control the snake with the arrow keys.
 * If the snake dies, restart the game by pressing the enter key.
 
