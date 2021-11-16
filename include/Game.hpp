@@ -2,7 +2,7 @@
 
 #include "raylib.h"
 #include "Snake.hpp"
-// #include "Fruit.hpp"
+#include "Fruit.hpp"
 
 enum GameStates {
     LOGO,
@@ -35,6 +35,6 @@ private:
     GameStates gamestate;
 
     Snake snake;
-    // Fruit fruit;
+    Fruit fruit;
     
 };

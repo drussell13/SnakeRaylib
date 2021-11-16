@@ -3,21 +3,20 @@
 
 Game::Game()
 {
+    screen_width = SCREEN_WIDTH;
+    screen_height = SCREEN_HEIGHT;
+    tile_size = TILE_SIZE;
+    
     Init();
 }
 
 void Game::Init()
 {
-    screen_width = SCREEN_WIDTH;
-    screen_height = SCREEN_HEIGHT;
-
-    tile_size = TILE_SIZE;
-
     frames_counter = 0;
     gamestate = GameStates::TITLE;
 
     snake.Init();
-    fruit.Init();
+    fruit.Init(snake);
 }
 
 void Game::Run()
@@ -53,7 +52,7 @@ void Game::Draw()
             DrawRectangle(0, 0, screen_width, screen_height, RAYWHITE);
             DrawGrid();
             snake.Draw();
-            // fruit.Draw();
+            fruit.Draw();
             break;
         case GameStates::ENDING:
             DrawRectangle(0, 0, screen_width, screen_height, YELLOW);
@@ -100,12 +99,6 @@ void Game::Update()
             }
             break;
         case GameStates::GAMEPLAY:
-            // Check collision here somehow
-            // * edge 
-            // * fruit 
-            // * tail if (snake.checkTailCollision()) gamestate = GameStates::ENDING;
-            if (IsKeyDown(KEY_SPACE)) snake.Grow();
-            
             // Update direction
             if (IsKeyDown(KEY_RIGHT)) snake.ChangeDirection(Directions::RIGHT);
             if (IsKeyDown(KEY_LEFT)) snake.ChangeDirection(Directions::LEFT);
@@ -117,6 +110,14 @@ void Game::Update()
             // Collisions should be down here actually.
             if (ObjectOutOfBounds(snake.GetHead())) gamestate = GameStates::ENDING;
             if (snake.CollidesWithTail()) gamestate = GameStates::ENDING;
+            
+            // Check if fruit eaten
+            if (snake.ObjectCollidesWithSnake(fruit.GetPosition()))
+            {
+                snake.Grow();
+                fruit.Init(snake);
+
+            }
             break;
         case GameStates::ENDING:
             if (IsKeyPressed(KEY_ENTER))

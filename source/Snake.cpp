@@ -4,14 +4,12 @@
 
 Snake::Snake()
 {
-    Init();
+    tile_size = TILE_SIZE;
 }
 
 
 void Snake::Init()
 {
-    tile_size = TILE_SIZE;
-
     int initial_x_tile = (int)(SCREEN_WIDTH/2) / tile_size;
     int initial_y_tile = (int)(SCREEN_HEIGHT/2) / tile_size;
 
@@ -133,7 +131,7 @@ bool Snake::CollidesWithTail()
 }
 
 
-bool ObjectCollidesWithSnake(Vector2 obj)
+bool Snake::ObjectCollidesWithSnake(Vector2 obj)
 {
     for (int i=0; i<body.size(); i++)
     {
